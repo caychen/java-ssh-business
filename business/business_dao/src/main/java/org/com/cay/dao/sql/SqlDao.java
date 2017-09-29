@@ -1,0 +1,177 @@
+package org.com.cay.dao.sql;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.com.cay.utils.UtilFuns;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+
+/*
+ * 执行sql语句类
+ * 调用方法：
+ * 引入配置问题 
+ * 
+ */
+public class SqlDao {
+	private static Logger log = Logger.getLogger(SqlDao.class);
+	//private UtilFuns utilFuns = new UtilFuns();
+    private JdbcTemplate jdbcTemplate;
+
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	public int findInt(String sql){
+		log.debug(sql);
+		int i = jdbcTemplate.queryForObject(sql, Integer.class);
+		return i;
+	}
+	
+	public int findInt(String sql, Object[] objs){
+		log.debug(sql);
+		int i = jdbcTemplate.queryForObject(sql, objs, Integer.class);
+		return i;
+	}
+	
+	//返回单值
+	public String getSingleValue(String sql){
+		log.debug(sql);
+		StringBuffer sBuf = new StringBuffer();
+		List<Map<String, Object>> jlist = jdbcTemplate.queryForList(sql);
+		Iterator<Map<String, Object>> ite = jlist.iterator();
+        while(ite.hasNext()){
+        	Map<String, Object> map = (Map<String, Object>)ite.next();
+            for(Object o:map.keySet()){
+            	sBuf.append(String.valueOf(map.get(o))).append(",");
+            }
+        }
+        if(sBuf!=null && sBuf.length()>1){
+        	sBuf.delete(sBuf.length()-1, sBuf.length());	//del last char
+        }
+		return sBuf.toString();
+	}
+	
+	public String getSingleValue(String sql, Object[] objs){
+		log.debug(sql);
+		StringBuffer sBuf = new StringBuffer();
+		List<Map<String, Object>> jlist = null;
+		if(UtilFuns.arrayValid(objs)){
+			jlist = jdbcTemplate.queryForList(sql, objs);
+		} else {
+			jlist = jdbcTemplate.queryForList(sql);
+		}
+		Iterator<Map<String, Object>> ite = jlist.iterator();
+		while(ite.hasNext()){
+			Map<String, Object> map = (Map<String, Object>)ite.next();
+            for(Object o:map.keySet()){
+            	sBuf.append(String.valueOf(map.get(o))).append(",");
+            }
+        }
+        if(sBuf!=null && sBuf.length()>1){
+        	sBuf.delete(sBuf.length()-1, sBuf.length());	//del last char
+        }
+		return sBuf.toString();
+	}
+	
+	public String[] toArray(String sql){
+		log.debug(sql);
+		String[] strs = null;
+		List<String> aList = this.executeSQL(sql);
+		if(aList.size()>0){
+			int count = aList.size();
+			strs = new String[ count ];
+			for(int i=0; i<count; i++) {
+				strs[ i ] = String.valueOf(aList.get(i));
+			}
+			return strs;
+		}else{
+			return null;
+		}
+	}
+	
+	public List<String> executeSQL(String sql){
+		log.debug(sql);
+		List<String> aList = new ArrayList<String>();
+		List<Map<String, Object>> jlist = jdbcTemplate.queryForList(sql);
+		Iterator<Map<String, Object>> ite = jlist.iterator();
+		while(ite.hasNext()){
+			Map<String, Object> map = (Map<String, Object>)ite.next();
+			for(Object o:map.keySet()){
+				if(map.get(o.toString())==null){
+					aList.add("");		//对象不存在时，写空串
+				}else{
+					aList.add(map.get(o.toString()).toString());
+				}
+			}
+		}
+		return aList;
+	}
+	
+	public List<String> executeSQL(String sql, Object[] objs){
+		log.debug(sql);
+		List<String> aList = new ArrayList<>();
+		List<Map<String, Object>> jlist = null;
+		if(UtilFuns.arrayValid(objs)){
+			jlist = jdbcTemplate.queryForList(sql, objs);
+		} else {
+			jlist = jdbcTemplate.queryForList(sql);
+		}
+		Iterator<Map<String, Object>> ite = jlist.iterator();
+		while(ite.hasNext()){
+			Map<String, Object> map = (Map<String, Object>)ite.next();
+            for(Object o:map.keySet()){
+            	aList.add((String)map.get(o));
+            }
+        }
+        return aList;
+	}
+	
+	public List<Object[]> executeSQLForList(String sql, Object[] objs){
+		log.debug(sql);
+		List<Object[]> aList = new ArrayList<Object[]>();
+		List<Map<String, Object>> jlist = null;
+		if(UtilFuns.arrayValid(objs)){
+			jlist = jdbcTemplate.queryForList(sql, objs);
+		} else {
+			jlist = jdbcTemplate.queryForList(sql);
+		}
+		
+		Iterator<Map<String, Object>> ite = jlist.iterator();
+		
+		List<String> list;
+		
+		while(ite.hasNext()){
+			Map<String, Object> map = (Map<String, Object>)ite.next();
+            list = new ArrayList<String>();
+            
+            for(Object o:map.keySet()){
+            	list.add((String) map.get(o));
+            }
+            aList.add(list.toArray());
+        }
+		
+		return aList;
+	}
+	
+	public int updateSQL(String sql){
+		log.debug(sql);
+		int i = jdbcTemplate.update(sql);
+		return i;
+	}
+	
+	public int updateSQL(String sql, Object[] objs){
+		log.debug(sql);
+		int i = jdbcTemplate.update(sql, objs);
+		return i;
+	}
+	
+	public int[] batchSQL(String[] sql){
+		log.debug(sql);
+		return jdbcTemplate.batchUpdate(sql);
+	}
+}

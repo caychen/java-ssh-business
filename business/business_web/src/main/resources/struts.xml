@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<constant name="struts.ui.theme" value="simple"/>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<package name="default" namespace="/" extends="struts-default" strict-method-invocation="true">
+	
+		<!-- 全局异常错误提示页面  -->
+		<global-results>
+			<result name="sysException">/WEB-INF/pages/error.jsp</result>
+			<result name="error">/WEB-INF/pages/error.jsp</result>
+		</global-results>
+     
+		<global-exception-mappings>
+			<exception-mapping result="sysException" exception="org.com.cay.exception.SysException"/>
+			<exception-mapping result="error" exception="java.lang.Exception"/>
+		</global-exception-mappings>
+
+		<action name="login" method="login" class="loginAction">
+			<result name="login">/WEB-INF/pages/sysadmin/login/login.jsp</result>
+			<result name="success">/WEB-INF/pages/home/fmain.jsp</result>
+		</action>
+		<action name="logout" method="logout" class="loginAction">
+			<result name="logout">/WEB-INF/pages/sysadmin/login/logout.jsp</result>
+		</action>
+		
+		<action name="homeAction_*" method="{1}" class="homeAction">
+			<result name="fmain">/WEB-INF/pages/home/fmain.jsp</result>
+			<result name="title">/WEB-INF/pages/home/title.jsp</result>
+			<result name="toleft">/WEB-INF/pages/${moduleName}/left.jsp</result>
+			<result name="tomain">/WEB-INF/pages/${moduleName}/main.jsp</result>
+			<!-- struts2.3(包括2.3)之后需要配置该选项，告知允许访问的方法，以逗号分割 -->
+			<allowed-methods>title,toleft,tomain</allowed-methods>
+		</action>
+
+	</package>
+
+	<include file="struts2/struts-sysadmin.xml"/>
+	<include file="struts2/struts-cargo.xml"/>
+	<include file="struts2/struts-stat.xml"/>
+<!-- 		
+	
+	<include file="struts2/struts-basicinfo.xml"/>
+	<include file="struts2/struts-stat.xml"/>
+ -->
+</struts>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+	<description>shiro配置</description>
+	
+	<!-- SecurityManager配置 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realms">
+			<list><!-- 引用自定义的realm或者realm集合 -->
+				<ref bean="authRealm"/>
+			</list>
+		</property>
+		
+		<!-- 缓存 -->
+		<property name="cacheManager">
+			<!-- 用户授权/认证信息Cache, 采用EhCache  缓存 -->
+			<bean class="org.apache.shiro.cache.ehcache.EhCacheManager">
+				<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 配置Realm域 -->
+	<bean id="authRealm" class="org.com.cay.shiro.AuthRealm">
+		<property name="userService" ref="userService"></property>
+		<!-- 自定义密码匹配器 -->
+		<property name="credentialsMatcher">
+			<bean class="org.com.cay.shiro.CustomCredentialsMatcher"></bean>
+		</property>
+	</bean>
+	
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"></property>
+		<property name="loginUrl" value="/index.jsp"></property>
+		<property name="successUrl" value=""></property>
+		<property name="filterChainDefinitions">
+			<value>
+				/index.jsp* = anon
+				/home* = anon
+				/sysadmin/login/login.jsp* = anon
+				/sysadmin/login/logout.jsp* = anon
+				/login* = anon
+				/logout* = anon
+				/components/** = anon
+				/css/** = anon
+				/images/** = anon
+				/js/** = anon
+				/make/** = anon
+				/skin/** = anon
+				/stat/** = anon
+				/ufiles/** = anon
+				/validator/** = anon
+				/resource/** = anon
+				/logout = logout
+				/** = authc
+				/*.* = authc
+			</value>
+		</property>
+	</bean>
+	
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+	
+	<!-- 生成代理，通过代理进行控制 -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true"></property>
+	</bean>
+	
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager"></property>
+	</bean>
+</beans>

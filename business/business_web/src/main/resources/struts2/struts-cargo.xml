@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<constant name="struts.ui.theme" value="simple"/>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<!-- 继承struts2.xml，使用其全局异常 -->
+	<package name="cargo" namespace="/cargo" extends="default" strict-method-invocation="true">
+	
+		<action name="contractAction_*" method="{1}" class="contractAction">
+			<result name="list">/WEB-INF/pages/cargo/contract/jContractList.jsp</result>
+			<result name="toview">/WEB-INF/pages/cargo/contract/jContractView.jsp</result>
+			<result name="tocreate">/WEB-INF/pages/cargo/contract/jContractCreate.jsp</result>
+			<result name="alist" type="redirectAction">contractAction_list</result>
+			<result name="toupdate">/WEB-INF/pages/cargo/contract/jContractUpdate.jsp</result>
+			<allowed-methods>list,toview,tocreate,insert,toupdate,update,delete,submit,cancel,print</allowed-methods>
+		</action>
+		
+		<action name="contractProductAction_*" method="{1}" class="contractProductAction">
+			<result name="tocreate">/WEB-INF/pages/cargo/contract/jContractProductCreate.jsp</result>
+			<result name="toupdate">/WEB-INF/pages/cargo/contract/jContractProductUpdate.jsp</result>
+			<allowed-methods>tocreate,insert,delete,toupdate,update</allowed-methods>
+		</action>
+		
+		<action name="extCproductAction_*" method="{1}" class="extCproductAction">
+			<result name="tocreate">/WEB-INF/pages/cargo/contract/jExtCproductCreate.jsp</result>
+			<result name="toupdate">/WEB-INF/pages/cargo/contract/jExtCproductUpdate.jsp</result>
+			<allowed-methods>tocreate,insert,delete,toupdate,update</allowed-methods>
+		</action>
+		
+		<action name="outProductAction_*" method="{1}" class="outProductAction">
+			<result name="toedit">/WEB-INF/pages/cargo/outproduct/jOutProduct.jsp</result>
+			<allowed-methods>toedit,print</allowed-methods>
+		</action>
+		
+		<action name="exportAction_*" method="{1}" class="exportAction">
+			<result name="contractList">/WEB-INF/pages/cargo/export/jContractList.jsp</result>
+			<result name="list">/WEB-INF/pages/cargo/export/jExportList.jsp</result>
+			<result name="toview">/WEB-INF/pages/cargo/export/jExportView.jsp</result>
+			<result name="tocreate">/WEB-INF/pages/cargo/export/jExportCreate.jsp</result>
+			<result name="alist" type="redirectAction">exportAction_list</result>
+			<result name="toupdate">/WEB-INF/pages/cargo/export/jExportUpdate.jsp</result>
+			<allowed-methods>contractList,tocreate,insert,toview,toupdate,submit,cancel,delete,update,export</allowed-methods>
+		</action>
+		
+		<action name="packingListAction_*" method="{1}" class="packingListAction">
+			<result name="alist" type="redirect">packingListAction_list</result>
+			<result name="plist">/WEB-INF/pages/cargo/packinglist/jPackingListListPage.jsp</result>
+			<result name="pcreate">/WEB-INF/pages/cargo/packinglist/jPackingListCreate.jsp</result>
+			<result name="pupdate">/WEB-INF/pages/cargo/packinglist/jPackingListUpdate.jsp</result>
+			<result name="pview">/WEB-INF/pages/cargo/packinglist/jPackingListView.jsp</result>
+			<allowed-methods>contractList,tocreate,insert,toview,toupdate,submit,cancel,delete,update,export</allowed-methods>
+		</action>
+	</package>
+</struts>

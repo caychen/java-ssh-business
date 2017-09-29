@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+	<description>Quartz配置</description>
+	
+	<!-- 定义一个任务bean -->
+	<bean id="mailJob" class="org.com.cay.job.MailJob"></bean>
+	
+	<!-- 定义一个MethodInvokingJobDetailFactoryBean -->
+	<bean id="methodInvokingJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="mailJob"></property>
+		<property name="targetMethod" value="send"></property>
+	</bean>
+	
+	<!-- 指定触发器 -->
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="methodInvokingJob"></property>
+		<!-- 从0秒开始，每隔10秒，任意分，任意时，任意日，任意月，任意星期，任意年，
+			规定如果日为*，则星期必须为？，
+			如果日为？，则星期可以为任意指定值
+			规则：
+				? 号只能用在日和周域上，但是不能在这两个域上同时使用
+				L 说明了某域上允许的最后一个值，它仅被日和周域支持
+				W 字符代表着平日 (Mon-Fri或2-6)，并且仅能用于日域中，它用来指定离指定日的最近的一个平日
+				# 字符仅能用于周域中，它用于指定月份中的第几周的哪一天
+			例如：
+			0 * 17 * * ? 
+				表示：每天从下午17点到17点59分，每分钟触发一次任务
+			0 10,44 14 ? 3 WED
+				表示：在三月份每周三的下午14点10分和14点44分两处各被触发一次任务
+			0 0,15,30,45 * * * ?
+			0 0/15 * * * ? 
+				表示：每刻钟被触发一次
+			0 45 3-8 ? * *
+				表示：在上午3点到8点的每个点的45分时被触发一次任务，即3:45,4:45,5:45,6:45,7:45,8:45
+			0 0 8 L * ?
+				表示：在每个月的最后一天的上午8点触发一次
+			0 0 12 ? * 2L
+				表示：在每个月的最后一个星期一的12点被触发一次
+			0 15 10 ? * 6L
+				表示：在每月的最后一个周五的上午10点15分触发一次
+			0 15 10 ? * 6#3
+				表示：在每月的第三周的星期五上午10点15分触发一次
+		 -->
+		<property name="cronExpression" value="0/10 * * * * ? *"></property>
+	</bean>
+	
+	<!-- 指定一个总调度器 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>

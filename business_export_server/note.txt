@@ -1,0 +1,11 @@
+使用ssh和webservice集成系统
+问题：
+	如果struts2的filter-class使用org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter过滤器
+	而其url-pattern使用/*，则仍然会拦截webservice，
+	
+解决方法：
+	方法一：
+		将struts2的url-pattern替换/s/*(s随意写),使struts2只拦截s路径下的*
+	方法二：
+		需要重写StrutsPrepareAndExecuteFilter的doFilter方法，
+		将webservice服务路径放行

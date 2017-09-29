@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+
+	<!-- Action -->
+	<bean id="loginAction" class="org.com.cay.action.LoginAction" scope="prototype">
+	</bean>
+	<bean id="homeAction" class="org.com.cay.action.HomeAction" scope="prototype">
+	</bean>
+	
+	<bean id="deptAction" class="org.com.cay.action.sysadmin.DeptAction" scope="prototype">
+		<property name="deptService" ref="deptService"></property>
+	</bean>
+	
+	<bean id="userAction" class="org.com.cay.action.sysadmin.UserAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="deptService" ref="deptService"></property>
+		<property name="roleService" ref="roleService"></property>
+	</bean>
+	
+	<bean id="roleAction" class="org.com.cay.action.sysadmin.RoleAction" scope="prototype">
+		<property name="roleService" ref="roleService"></property>
+		<property name="moduleService" ref="moduleService"></property>
+		<!-- <property name="deptService" ref="deptService"></property> -->
+	</bean>
+	
+	<bean id="moduleAction" class="org.com.cay.action.sysadmin.ModuleAction" scope="prototype">
+		<property name="moduleService" ref="moduleService"></property>
+		<!-- <property name="deptService" ref="deptService"></property> -->
+	</bean>
+	
+	<bean id="contractAction" class="org.com.cay.action.cargo.ContractAction" scope="prototype">
+		<property name="contractService" ref="contractService"></property>
+	</bean>
+	
+	<bean id="contractProductAction" class="org.com.cay.action.cargo.ContractProductAction" scope="prototype">
+		<property name="contractProductService" ref="contractProductService"></property>
+		<property name="factoryService" ref="factoryService"></property>
+	</bean>
+	
+	<bean id="extCproductAction" class="org.com.cay.action.cargo.ExtCproductAction" scope="prototype">
+		<property name="extCproductService" ref="extCproductService"></property>
+		<property name="factoryService" ref="factoryService"></property>
+	</bean>
+	
+	<bean id="outProductAction" class="org.com.cay.action.cargo.OutProductAction" scope="prototype">
+		<property name="contractProductService" ref="contractProductService"></property>
+	</bean>
+	
+	<bean id="exportAction" class="org.com.cay.action.cargo.ExportAction" scope="prototype">
+		<property name="exportService" ref="exportService"></property>
+		<property name="contractService" ref="contractService"></property>
+		<property name="exportProductService" ref="exportProductService"></property>
+		<property name="exportWebService" ref="exportClient"></property>
+	</bean>
+	
+	<bean id="statChartAction" class="org.com.cay.action.stat.StatChartAction" scope="prototype">
+		<property name="statChartService" ref="statChartService"></property>
+	</bean>
+	
+	<bean id="packingListAction" class="org.com.cay.action.cargo.PackingListAction" scope="prototype">
+		<property name="packingListService" ref="packingListService"></property>
+	</bean>
+</beans>

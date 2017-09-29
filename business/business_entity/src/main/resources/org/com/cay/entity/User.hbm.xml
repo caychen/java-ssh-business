@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-14 10:41:58 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="org.com.cay.entity">
+    <class name="User" table="USER_P" dynamic-insert="true" dynamic-update="true">
+        <id name="id" type="java.lang.String">
+            <column name="USER_ID" />
+            <generator class="assigned" />
+        </id>
+        
+        <many-to-one name="dept" class="Dept" fetch="join">
+            <column name="DEPT_ID" />
+        </many-to-one>
+        
+        <property name="userName" type="java.lang.String">
+            <column name="USER_NAME" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="STATE" />
+        </property>
+        <property name="createBy" type="java.lang.String">
+            <column name="CREATE_BY" />
+        </property>
+        <property name="createDept" type="java.lang.String">
+            <column name="CREATE_DEPT" />
+        </property>
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATE_TIME" />
+        </property>
+        <property name="updateBy" type="java.lang.String">
+            <column name="UPDATE_BY" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UPDATE_TIME" />
+        </property>
+        
+        <one-to-one name="userInfo" class="UserInfo" cascade="all">
+        </one-to-one>
+        
+        <set name="roles" table="ROLE_USER_P">
+        	<key column="USER_ID"></key>
+        	<many-to-many class="Role" column="ROLE_ID" order-by="ORDER_NO"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

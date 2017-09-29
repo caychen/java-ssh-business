@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+	<bean id="deptService" class="org.com.cay.service.sysadmin.impl.DeptServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+
+	<bean id="userService" class="org.com.cay.service.sysadmin.impl.UserServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+		<property name="mailMessage" ref="mailMessage"></property>
+		<property name="mailSender" ref="mailSender"></property>
+	</bean>
+	
+	<bean id="roleService" class="org.com.cay.service.sysadmin.impl.RoleServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	
+	<bean id="moduleService" class="org.com.cay.service.sysadmin.impl.ModuleServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	
+	<bean id="contractService" class="org.com.cay.service.cargo.impl.ContractServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	
+	<bean id="contractProductService" class="org.com.cay.service.cargo.impl.ContractProductServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	
+	<bean id="extCproductService" class="org.com.cay.service.cargo.impl.ExtCproductServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	
+	<bean id="factoryService" class="org.com.cay.service.cargo.impl.FactoryServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+
+	<bean id="exportService" class="org.com.cay.service.cargo.impl.ExportServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	
+	<bean id="exportProductService" class="org.com.cay.service.cargo.impl.ExportProductServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	
+	<bean id="extEproductService" class="org.com.cay.service.cargo.impl.ExtEproductServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+	
+	<bean id="statChartService" class="org.com.cay.service.stat.impl.StatChartServiceImpl">
+		<property name="sqlDao" ref="sqlDao"></property>
+	</bean>
+	
+	<bean id="packingListService" class="org.com.cay.service.cargo.impl.PackingListServiceImpl">
+		<property name="baseDao" ref="baseDao"></property>
+	</bean>
+</beans>

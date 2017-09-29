@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-14 13:08:11 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="org.com.cay.entity">
+    <class name="Role" table="ROLE_P">
+    	<id name="id" type="java.lang.String">
+    		<column name="ROLE_ID"></column>
+    		<generator class="uuid"></generator>
+    	</id>
+        <property name="orderNo" type="java.lang.String">
+            <column name="ORDER_NO" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="REMARK" />
+        </property>
+        <property name="createBy" type="java.lang.String">
+            <column name="CREATE_BY" />
+        </property>
+        <property name="createDept" type="java.lang.String">
+            <column name="CREATE_DEPT" />
+        </property>
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATE_TIME" />
+        </property>
+        <property name="updateBy" type="java.lang.String">
+            <column name="UPDATE_BY" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="UPDATE_TIME" />
+        </property>
+        
+        <set name="users" table="ROLE_USER_P" inverse="false" lazy="true">
+            <key>
+                <column name="ROLE_ID" />
+            </key>
+            <many-to-many class="User" column="USER_ID"/>
+        </set>
+        
+        <set name="modules" table="ROLE_MODULE_P">
+        	<key column="ROLE_ID"></key>
+        	<many-to-many class="Module" column="MODULE_ID" order-by="ORDER_NO"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

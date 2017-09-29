@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-30 13:53:22 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="org.com.cay.entity">
+    <class name="Export" table="EXPORT_C">
+        <id name="id" type="string">
+            <column name="EID" />
+            <generator class="uuid" />
+        </id>
+        <property name="exportId" type="string">
+            <column name="EXPORT_ID" />
+        </property>
+        
+        <set name="products" cascade="all" inverse="true" lazy="true">
+            <key>
+                <column name="EID" />
+            </key>
+            <one-to-many class="ExportProduct" />
+        </set>
+        <property name="inputDate" type="date">
+            <column name="INPUT_DATE" />
+        </property>
+        <property name="shipmentPort" type="string">
+            <column name="SHIPMENT_PORT" />
+        </property>
+        <property name="destinationPort" type="string">
+            <column name="DESTINATION_PORT" />
+        </property>
+        <property name="transportMode" type="string">
+            <column name="TRANSPORT_MODE" />
+        </property>
+        <property name="priceCondition" type="string">
+            <column name="PRICE_CONDITION" />
+        </property>
+        <property name="boxNums" type="integer">
+            <column name="BOX_NUMS" />
+        </property>
+        <property name="grossWeights" type="double">
+            <column name="GROSS_WEIGHTS" />
+        </property>
+        <property name="measurements" type="double">
+            <column name="MEASUREMENTS" />
+        </property>
+        <property name="state" type="integer">
+            <column name="STATE" />
+        </property>
+        <property name="reason" type="string">
+            <column name="REASON" />
+        </property>
+        <property name="orderNo" type="integer">
+            <column name="ORDER_NO" />
+        </property>
+        <property name="exportDate" type="date">
+            <column name="EXPORT_DATE" />
+        </property>
+    </class>
+</hibernate-mapping>

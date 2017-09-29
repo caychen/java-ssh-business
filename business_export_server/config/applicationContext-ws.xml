@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>
+
+	<!-- <bean id="epService" class="org.com.cay.webservice.impl.EpServiceImpl">
+	   <property name="exportService" ref="exportService"></property>
+	</bean> -->
+	
+	<!-- <jaxws:server address="/export">
+	    <jaxws:serviceBean >
+	         <ref bean="epService" />
+	    </jaxws:serviceBean>
+	</jaxws:server>
+ -->
+	<jaxws:endpoint id="export" 
+		address="/export" 
+		implementorClass="org.com.cay.webservice.impl.ExportWebServiceImpl">
+	</jaxws:endpoint>
+</beans>

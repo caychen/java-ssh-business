@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-14 11:05:19 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="org.com.cay.entity">
+	<class name="UserInfo" table="USER_INFO_P" dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="java.lang.String">
+			<column name="USER_INFO_ID" />
+			<generator class="assigned" />
+		</id>
+
+		<property name="name" type="java.lang.String">
+			<column name="NAME" />
+		</property>
+
+		<many-to-one name="manager" class="User">
+			<column name="MANAGER_ID"></column>
+		</many-to-one>
+
+		<property name="joinDate" type="java.util.Date">
+			<column name="JOIN_DATE" />
+		</property>
+
+		<property name="salary" type="java.lang.Double">
+			<column name="SALARY" />
+		</property>
+
+		<property name="birthday" type="java.util.Date">
+			<column name="BIRTHDAY" />
+		</property>
+
+		<property name="gender" type="java.lang.String">
+			<column name="GENDER" />
+		</property>
+
+		<property name="station" type="java.lang.String">
+			<column name="STATION" />
+		</property>
+
+		<property name="telephone" type="java.lang.String">
+			<column name="TELEPHONE" />
+		</property>
+
+		<property name="degree" type="java.lang.Integer">
+			<column name="DEGREE" />
+		</property>
+
+		<property name="remark" type="java.lang.String">
+			<column name="REMARK" />
+		</property>
+
+		<property name="orderNo" type="java.lang.Integer">
+			<column name="ORDER_NO" />
+		</property>
+
+		<property name="createBy" type="java.lang.String">
+			<column name="CREATE_BY" />
+		</property>
+		<property name="createDept" type="java.lang.String">
+			<column name="CREATE_DEPT" />
+		</property>
+		<property name="createTime" type="java.util.Date">
+			<column name="CREATE_TIME" />
+		</property>
+		<property name="updateBy" type="java.lang.String">
+			<column name="UPDATE_BY" />
+		</property>
+		<property name="updateTime" type="java.util.Date">
+			<column name="UPDATE_TIME" />
+		</property>
+		<property name="email" type="java.lang.String">
+			<column name="EMAIL" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-30 13:53:22 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="org.com.cay.entity">
+    <class name="ExportProduct" table="EXPORT_PRODUCT_C">
+        <id name="id" type="java.lang.String">
+            <column name="ID" />
+            <generator class="uuid" />
+        </id>
+        <property name="exportProductId" type="string">
+            <column name="EXPORTPRODUCT_ID" />
+        </property>
+        
+        <many-to-one name="export" class="Export" fetch="join">
+            <column name="EID" />
+        </many-to-one>
+        
+        <property name="factoryId" type="string">
+            <column name="FACTORY_ID" />
+        </property>
+        <property name="productNo" type="string">
+            <column name="PRODUCT_NO" />
+        </property>
+        <property name="packingUnit" type="string">
+            <column name="PACKING_UNIT" />
+        </property>
+        <property name="cnumber" type="integer">
+            <column name="CNUMBER" />
+        </property>
+        <property name="boxNum" type="integer">
+            <column name="BOX_NUM" />
+        </property>
+        <property name="grossWeight" type="double">
+            <column name="GROSS_WEIGHT" />
+        </property>
+        <property name="netWeight" type="double">
+            <column name="NET_WEIGHT" />
+        </property>
+        <property name="sizeLength" type="double">
+            <column name="SIZE_LENGTH" />
+        </property>
+        <property name="sizeWidth" type="double">
+            <column name="SIZE_WIDTH" />
+        </property>
+        <property name="sizeHeight" type="double">
+            <column name="SIZE_HEIGHT" />
+        </property>
+        <property name="exPrice" type="double">
+            <column name="EX_PRICE" />
+        </property>
+        <property name="price" type="double">
+            <column name="PRICE" />
+        </property>
+        <property name="tax" type="double">
+            <column name="TAX" />
+        </property>
+        <property name="orderNo" type="integer">
+            <column name="ORDER_NO" />
+        </property>
+    </class>
+</hibernate-mapping>
